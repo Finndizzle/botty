@@ -23,7 +23,7 @@ class PickIt:
         self._config = Config()
         self._last_closest_item: Item = None
 
-    def pick_up_items(self, char: IChar) -> bool:
+    def pick_up_items(self, char: IChar, location: str) -> bool:
         """
         Pick up all items with specified char
         :param char: The character used to pick up the item
@@ -120,7 +120,7 @@ class PickIt:
                         # send log to discord
                         if found_items and closest_item.name not in picked_up_items:
                             Logger.info(f"Picking up: {closest_item.name} ({closest_item.score*100:.1f}% confidence)")
-                            self._game_stats.log_item_pickup(closest_item.name, self._config.items[closest_item.name] == 2)
+                            self._game_stats.log_item_pickup(f"{closest_item.name} at {location}", self._config.items[closest_item.name] == 2)
                         picked_up_items.append(closest_item.name)
                 else:
                     char.pre_move()
